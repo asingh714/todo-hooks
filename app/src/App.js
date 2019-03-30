@@ -34,16 +34,17 @@ export class App extends Component {
 }
 
 export default function HooksApp() {
-  const title = "I am a title";
-  const inputText = "";
+  const [title, setTitle] = useState("I am a title using hooks.");
+  const [inputText, setInputText] = useState("");
 
   const updateTitle = e => {
     e.preventDefault();
-    console.log("what is happening?");
+    setTitle(inputText);
+    setInputText("")
   };
 
   const updateInput = e => {
-    console.log("What is next??");
+    setInputText(e.target.value)
   };
 
   return (
