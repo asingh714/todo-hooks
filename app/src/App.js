@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    title: "This is a title",
+    inputText: ""
+  }
+
+  updateInput = e => {
+    this.setState({ inputText: e.target.value })
+  }
+
+  updateTitle = e => {
+    e.preventDefault();
+    this.setState({ title: this.state.inputText })
+  }
+  
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>{this.state.title}</h1>
+        <form onSubmit={this.updateTitle}>
+          <input 
+          type="text"
+          value={this.state.inputText}
+          onChange={this.updateInput}
+          />
+          <button>Set Title</button>
+        </form>
       </div>
     );
   }
