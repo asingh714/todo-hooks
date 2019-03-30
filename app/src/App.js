@@ -35,28 +35,44 @@ export class App extends Component {
 
 export default function HooksApp() {
   const [title, setTitle] = useState("I am a title using hooks.");
-  const [inputText, setInputText] = useState("");
+  const titleInput = useInput();
+  const secondInput = useInput();
 
   const updateTitle = e => {
     e.preventDefault();
-    setTitle(inputText);
-    setInputText("")
-  };
-
-  const updateInput = e => {
-    setInputText(e.target.value)
+    setTitle(titleInput.value);
+    titleInput.setValue("");
   };
 
   return (
     <div className="App">
       <h1>{title}</h1>
       <form onSubmit={updateTitle}>
-        <input type="text" value={inputText} onChange={updateInput} />
+        <input
+          type="text"
+          value={titleInput.value}
+          onChange={titleInput.updateValue}
+        />
+        <input
+          type="text"
+          value={secondInput.value}
+          onChange={secondInput.updateValue}
+        />
         <button>Set Title</button>
       </form>
     </div>
   );
 }
+
+const useInput = () => {
+  const [value, setValue] = useState("");
+
+  const updateValue = e => {
+    setValue(e.target.value);
+  };
+
+  return { value, updateValue, setValue };
+};
 
 /* 
 const obj = { oneProp: 'one', twoProp: 'two' };
@@ -69,8 +85,8 @@ const twoProp = obj.twoProp
 const arr = ['a', 'b', 'c'];
 
 const [x, y, z] = arr;
-const x = arr[0]; -> a
-const y = arr[1]; -> b
-const z = arr[2]; -> c
+const x = arr[0]; 
+const y = arr[1]; 
+const z = arr[2]; 
 
 */
