@@ -1,6 +1,21 @@
 import React, { Component, useState } from "react";
 import "./App.css";
 
+import TodoList from "./components/TodoList"
+
+const todosData = [
+  {
+    task: 'Organize Garage',
+    id: 1528817077286,
+    completed: false
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    completed: false
+  }
+];
+
 export class App extends Component {
   state = {
     title: "This is a title",
@@ -35,28 +50,35 @@ export class App extends Component {
 
 export default function HooksApp() {
   const [title, setTitle] = useState("I am a title using hooks.");
-  const titleInput = useInput();
-  const secondInput = useInput();
+  const todoInput = useInput();
+  const [todos, setTodos] = useState(todosData)
 
-  const updateTitle = e => {
-    e.preventDefault();
-    setTitle(titleInput.value);
-    titleInput.setValue("");
-  };
+  // const updateTitle = e => {
+  //   e.preventDefault();
+  //   setTitle(titleInput.value);
+  //   titleInput.setValue("");
+  // };
+
+  const addTodo = event => {
+    event.preventDefault();
+    const newTodo = {
+      task: todoInput.value,
+      id: Date.now(),
+      completed: false
+    }
+    setTodos([...todos, newTodo ])
+    todoInput.setValue("")
+  }
 
   return (
     <div className="App">
       <h1>{title}</h1>
-      <form onSubmit={updateTitle}>
+      <TodoList todos={todos} />
+      <form onSubmit={addTodo}>
         <input
           type="text"
-          value={titleInput.value}
-          onChange={titleInput.updateValue}
-        />
-        <input
-          type="text"
-          value={secondInput.value}
-          onChange={secondInput.updateValue}
+          value={todoInput.value}
+          onChange={todoInput.updateValue}
         />
         <button>Set Title</button>
       </form>
